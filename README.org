@@ -9,7 +9,7 @@
   It was created based on the usage of [[./ob-template.el][ob-template]].
 
   #+BEGIN_SRC coffee
-  return "hello world"
+  "hello world"
   #+END_SRC
 
   #+RESULTS:
