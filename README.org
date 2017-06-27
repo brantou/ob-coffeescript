@@ -1,0 +1,83 @@
+#+TITLE: ob-coffee
+
+* Introduction
+  :PROPERTIES:
+  :ID:       04d934b4-079c-4bb7-ae60-ad75dea39537
+  :END:
+
+  =ob-coffee= enables [[http://orgmode.org/worg/org-contrib/babel/intro.html][Org-Babel]] support for evaluating [[http://coffee-script.org/][CoffeeScript]] code.
+  It was created based on the usage of [[./ob-template.el][ob-template]].
+
+  #+BEGIN_SRC coffee
+  return "hello world"
+  #+END_SRC
+
+  #+RESULTS:
+  : hello world
+
+* Examples
+  :PROPERTIES:
+  :ID:       f76698a5-8e6d-4c47-a712-beda78487865
+  :END:
+
+**  variables
+   :PROPERTIES:
+   :ID:       c7c04ccf-b33b-4f50-8457-a808072e4e58
+   :END:
+
+  : #+BEGIN_SRC coffee :var a=3 b=4
+  :   a+b
+  : #+END_SRC
+
+  : #+RESULTS:
+  : : 7
+** table and list
+   :PROPERTIES:
+   :ID:       7d18b8cb-9d50-4c44-a968-536846a6b413
+   :END:
+
+  : #+NAME: tel-note
+  : | name  |    tel |
+  : |-------+--------|
+  : | brant | 170... |
+  : | ou    | 138... |
+
+  : #+BEGIN_SRC coffee :var tb=tel-note :results output table
+  :   console.log tb
+  : #+END_SRC
+
+  : #+RESULTS:
+  : | brant | 170... |
+  : | ou    | 138... |
+
+  : #+BEGIN_SRC coffee :var lst='(1 2 3) :results output
+  :   console.log lst
+  :   console.log num for num in lst
+  : #+END_SRC
+
+  : #+RESULTS:
+  : : [ 1, 2, 3 ]
+  : : 1
+  : : 2
+  : : 3
+
+** literate programming
+   :PROPERTIES:
+   :ID:       94fb606d-fad9-489d-a091-f63ad87953cc
+   :END:
+
+   : #+NAME: square
+   : #+BEGIN_SRC coffee
+   :   square = (x) -> x * x
+   : #+END_SRC
+
+   : #+NAME: calc-square
+   : #+BEGIN_SRC coffee  :var x=0 :noweb strip-export :results output
+   : <<square>>
+   : console.log square x
+   : #+END_SRC
+
+   : #+CALL: calc-square(x=5)
+
+   : #+RESULTS:
+   : : 25
