@@ -20,7 +20,7 @@
   :ID:       f76698a5-8e6d-4c47-a712-beda78487865
   :END:
 
-**  variables
+** variables
    :PROPERTIES:
    :ID:       c7c04ccf-b33b-4f50-8457-a808072e4e58
    :END:
@@ -81,3 +81,32 @@
 
    : #+RESULTS:
    : : 25
+** session
+   :PROPERTIES:
+   :ID:       2F331C5F-75BD-486D-ABCB-85F4E04A4BEF
+   :END:
+   : #+NAME: func-def
+   : #+BEGIN_SRC coffee :session :results output silent
+   :   square = (x) -> x * x
+   : #+END_SRC
+
+   : #+NAME: func-call-output
+   : #+BEGIN_SRC coffee :session :results output :var x=5
+   :   console.log square x
+   : #+END_SRC
+
+   : #+NAME: func-call-value
+   : #+BEGIN_SRC  coffee :session :results value :var x=5
+   :   square x
+   : #+END_SRC
+
+   : #+CALL: func-def()
+   : #+CALL: func-call-output(x=10)
+
+   : #+RESULTS:
+   : : 100
+
+   : #+CALL: func-call-value(x=10)
+
+   : #+RESULTS:
+   : : 100
