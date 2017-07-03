@@ -1,9 +1,9 @@
-;;; ob-coffee.el --- org-babel functions for coffee evaluation
+;;; ob-coffee.el --- org-babel functions for Coffee evaluation
 
-;; Copyright (C) Brantou
+;; Copyright (C) 2017 Brantou
 
 ;; Author: Brantou
-;; Keywords: literate programming, reproducible research
+;; Keywords: coffee-script, literate programming, reproducible research
 ;; Homepage: http://orgmode.org
 ;; Version: 0.01
 
@@ -30,8 +30,16 @@
 
 ;;; Requirements:
 
-;; node.js and coffee-script
+;; - node :: https://nodejs.org/en/
+;;
+;; - coffee-script :: http://coffeescript.org/
+;;
+;; - coffee-mode :: Can be installed through ELPA, or from
+;;   https://raw.githubusercontent.com/defunkt/coffee-mode/master/coffee-mode.el
 
+;;; TODO:
+
+;; - Support multiple sessions
 
 ;;; Code:
 (require 'ob)
