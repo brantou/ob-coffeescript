@@ -132,34 +132,22 @@ last statement in BODY, as elisp."
   (let ((result
          (pcase result-type
            (`output
-            (let ((input-body
-                   (lambda (body)
-                     (mapc
-                      (lambda (line)
-                        (insert (org-babel-chomp line))
-                        (comint-send-input nil t))
-                      (split-string body "[\r\n]"))))
-                  (eoe-string
-                   (format "console.log %S" org-babel-coffee-eoe-indicator)))
+            (let ((tmp-redir-file (org-babel-temp-file "coffee-redir-")))
               (org-babel-comint-with-output
-                  (session org-babel-coffee-eoe-indicator t eoe-string)
-                (insert eoe-string) (comint-send-input nil t))
-              (replace-regexp-in-string
-               "\n\n+" "\n"
-               (mapconcat
-                #'identity
-                (split-string
-                 (mapconcat
-                  #'org-trim
-                  (butlast
-                   (org-babel-comint-with-output
-                       (session org-babel-coffee-eoe-indicator t body)
-                     (funcall input-body body)
-                     (insert eoe-string) (comint-send-input nil t))
-                   2)
-                  "\n")
-                 "[\r\n]")
-                "\n"))))
+                  (session org-babel-coffee-eoe-indicator t body)
+                (comint-send-input nil t)
+                (mapc
+                 (lambda (line)
+                   (insert (org-babel-chomp line)) (comint-send-input nil t))
+                 (append
+                  (list
+                   (format "_stdout=console._stdout;console._stdout=fs.createWriteStream('%s');"
+                                (org-babel-process-file-name tmp-redir-file 'noquote)))
+                  (list body)
+                  (list "console._stdout=_stdout;")
+                  (list org-babel-coffee-eoe-indicator)))
+                (comint-send-input nil t))
+              (org-babel-eval-read-file tmp-redir-file)))
            (`value
             (let* ((tmp-file (org-babel-temp-file "coffee-")))
               (org-babel-comint-with-output
