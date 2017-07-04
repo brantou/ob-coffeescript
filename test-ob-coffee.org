@@ -1,3 +1,4 @@
+# -*- org-confirm-babel-evaluate: nil -*-
 #+OPTIONS: ^:nil
 
 * Return type: no session
@@ -6,16 +7,17 @@
    :END:
 
    #+NAME: ns-rt-value
-   #+BEGIN_SRC coffee :results value silent
-     'ob-coffee'
+   #+BEGIN_SRC coffee :results value
      'ob-coffee'
    #+END_SRC
 
    #+NAME: ns-rt-output
-   #+BEGIN_SRC coffee :results output silent
-     console.log 'ob-coffee'
+   #+BEGIN_SRC coffee :results output
      console.log 'ob-coffee'
    #+END_SRC
+
+   #+RESULTS: ns-rt-output
+   : ob-coffee
 
 * Return type: session
    :PROPERTIES:
@@ -23,13 +25,12 @@
    :END:
 
    #+NAME: is-rt-value
-   #+BEGIN_SRC  coffee :session :results value silent
+   #+BEGIN_SRC coffee :session :results value
      'ob-coffee'
    #+END_SRC
 
    #+NAME: is-rt-output
-   #+BEGIN_SRC coffee :session :results output silent
-     console.log 'ob-coffee'
+   #+BEGIN_SRC coffee :session :results output
      console.log 'ob-coffee'
    #+END_SRC
 
@@ -39,17 +40,17 @@
    :END:
 
    #+NAME: variable-int
-   #+BEGIN_SRC coffee :session :results value silent :var x=5
+   #+BEGIN_SRC coffee :session :results value :var x=5
      x
    #+END_SRC
 
    #+NAME: variable-str
-   #+BEGIN_SRC coffee  :session :results value silent :var str="ob-coffee"
+   #+BEGIN_SRC coffee  :session :results value :var str="ob-coffee"
      str
    #+END_SRC
 
    #+NAME: variable-list
-   #+BEGIN_SRC coffee :session :results value silent :var list='("a" "b" "c")
+   #+BEGIN_SRC coffee :session :results value :var list='("a" "b" "c")
      list
    #+END_SRC
 
@@ -58,13 +59,14 @@
    |---+---|
    | 3 | 4 |
 
-   #+BEGIN_SRC coffee :session :results value silent :var tb=num-tb :colnames no
+   #+NAME: variable-tb
+   #+BEGIN_SRC coffee :session :results value :var tb=num-tb :colnames no
      tb
    #+END_SRC
 
    #+NAME: multi-variables
-   #+BEGIN_SRC coffee :session :results output silent :var x=3 y=4 z=5
-     console.log x+y+z
+   #+BEGIN_SRC coffee :session :results value :var x=3 y=4 z=5
+     x+y+z
    #+END_SRC
 
 * Session
@@ -73,7 +75,27 @@
   :END:
 
   #+NAME: is-share-variable
-  #+BEGIN_SRC coffee :session :results output silent
+  #+BEGIN_SRC coffee :session :results output
     square = (x) -> x * x
     console.log square x
   #+END_SRC
+
+* Test
+  :PROPERTIES:
+  :ID:       c4e351f8-7556-4e08-a093-f9feb4bedcba
+  :END:
+
+  #+NAME: ob-coffee-tests
+  | functionality                    | block             | arg | expected  | results   | pass |
+  |----------------------------------+-------------------+-----+-----------+-----------+------|
+  | return-type: no session value    | ns-rt-value       |     | ob-coffee | ob-coffee | pass |
+  | return-type: no session output   | ns-rt-output      |     | ob-coffee | ob-coffee | pass |
+  | return-type: session base value  | is-rt-value       |     | ob-coffee | ob-coffee | pass |
+  | return-type: session base output | is-rt-output      |     | ob-coffee | ob-coffee | pass |
+  | variable-int                     | variable-int      |     | 5         | 5         | pass |
+  | variable-str                     | variable-str      |     | ob-coffee | ob-coffee | pass |
+  | variable-list                    | variable-list     |     | a,b,c     | a,b,c     | pass |
+  | variable-tb                      | variable-tb       |     | 1,2,3,4   | 1,2,3,4   | pass |
+  | variable-multi                   | multi-variables   |     | 12        | 12        | pass |
+  | session-share                    | is-share-variable |     | 9         | 9         | pass |
+  #+TBLFM: $5='(org-sbe $2) :: $6='(if (string= $4 $5) "pass" (format "expected %S but was %S" $4 $5))

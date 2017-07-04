@@ -54,7 +54,7 @@
 
 (def-edebug-spec org-test-at-id (form body))
 
-(unless (featurep 'ob-coffee)
+(unless (and (featurep 'ob-coffee) (featurep 'coffee-mode))
   (signal 'missing-test-dependency "Support for Coffee code blocks"))
 
 (ert-deftest ob-coffee/assert ()
