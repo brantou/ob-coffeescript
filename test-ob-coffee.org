@@ -1,11 +1,14 @@
 # -*- org-confirm-babel-evaluate: nil -*-
 #+OPTIONS: ^:nil
 
-* Return type: no session
+* No session
    :PROPERTIES:
    :ID:       036292ac-5694-4788-bd0e-eeecb4820020
    :END:
-
+** return type
+   :PROPERTIES:
+   :ID:       ee0cb5b4-7d0a-45a1-a683-edb69367c84f
+   :END:
    #+NAME: ns-rt-value
    #+BEGIN_SRC coffee :results value
      'ob-coffee'
@@ -16,14 +19,50 @@
      console.log 'ob-coffee'
    #+END_SRC
 
-   #+RESULTS: ns-rt-output
-   : ob-coffee
+** variable
+   :PROPERTIES:
+   :ID:       79274f81-96fa-4230-8846-b29113a82c89
+   :END:
 
-* Return type: session
+    #+NAME: ns-variable-int
+    #+BEGIN_SRC coffee :results value :var x=5
+      x
+    #+END_SRC
+
+    #+NAME: ns-variable-str
+    #+BEGIN_SRC coffee :results value :var str="ob-coffee"
+      str
+    #+END_SRC
+
+    #+NAME: ns-variable-list
+    #+BEGIN_SRC coffee :results value silent :var list='("a" "b" "c")
+      list
+    #+END_SRC
+
+    #+NAME: num-tb
+    | 1 | 2 |
+    |---+---|
+    | 3 | 4 |
+
+    #+NAME: ns-variable-tb
+    #+BEGIN_SRC coffee :results value :var tb=num-tb :colnames no
+      tb
+    #+END_SRC
+
+    #+NAME: ns-multi-variables
+    #+BEGIN_SRC coffee :results value :var x=3 y=4 z=5
+      x+y+z
+    #+END_SRC
+
+* session
    :PROPERTIES:
    :ID:       892f52bf-35e2-4929-9c3d-43dd0c59cd53
    :END:
 
+** return type
+   :PROPERTIES:
+   :ID:       88b0c507-4973-44f9-9960-7ac681229567
+   :END:
    #+NAME: is-rt-value
    #+BEGIN_SRC coffee :session :results value
      'ob-coffee'
@@ -34,51 +73,46 @@
      console.log 'ob-coffee'
    #+END_SRC
 
-* Variable
+** variable
    :PROPERTIES:
    :ID:       79274f81-96fa-4230-8846-b29113a82c89
    :END:
 
-   #+NAME: variable-int
-   #+BEGIN_SRC coffee :session :results value :var x=5
-     x
-   #+END_SRC
+    #+NAME: is-variable-int
+    #+BEGIN_SRC coffee :session :results value :var x=5
+      x
+    #+END_SRC
 
-   #+NAME: variable-str
-   #+BEGIN_SRC coffee  :session :results value :var str="ob-coffee"
-     str
-   #+END_SRC
+    #+NAME: is-variable-str
+    #+BEGIN_SRC coffee  :session :results value :var str="ob-coffee"
+      str
+    #+END_SRC
 
-   #+NAME: variable-list
-   #+BEGIN_SRC coffee :session :results value :var list='("a" "b" "c")
-     list
-   #+END_SRC
+    #+NAME: is-variable-list
+    #+BEGIN_SRC coffee :session :results value :var list='("a" "b" "c")
+      list
+    #+END_SRC
 
-   #+NAME: num-tb
-   | 1 | 2 |
-   |---+---|
-   | 3 | 4 |
+    #+NAME: num-tb
+    | 1 | 2 |
+    |---+---|
+    | 3 | 4 |
 
-   #+NAME: variable-tb
-   #+BEGIN_SRC coffee :session :results value :var tb=num-tb :colnames no
-     tb
-   #+END_SRC
+    #+NAME: is-variable-tb
+    #+BEGIN_SRC coffee :session :results value :var tb=num-tb :colnames no
+      tb
+    #+END_SRC
 
-   #+NAME: multi-variables
-   #+BEGIN_SRC coffee :session :results value :var x=3 y=4 z=5
-     x+y+z
-   #+END_SRC
+    #+NAME: is-multi-variables
+    #+BEGIN_SRC coffee :session :results value :var x=3 y=4 z=5
+      x+y+z
+    #+END_SRC
 
-* Session
-  :PROPERTIES:
-  :ID:       276bcd7b-7448-43f9-ae2a-205a317d1d47
-  :END:
-
-  #+NAME: is-share-variable
-  #+BEGIN_SRC coffee :session :results output
+    #+NAME: is-share-variable
+    #+BEGIN_SRC coffee :session :results output
     square = (x) -> x * x
     console.log square x
-  #+END_SRC
+    #+END_SRC
 
 * Test
   :PROPERTIES:
@@ -86,16 +120,21 @@
   :END:
 
   #+NAME: ob-coffee-tests
-  | functionality                    | block             | arg | expected  | results   | pass |
-  |----------------------------------+-------------------+-----+-----------+-----------+------|
-  | return-type: no session value    | ns-rt-value       |     | ob-coffee | ob-coffee | pass |
-  | return-type: no session output   | ns-rt-output      |     | ob-coffee | ob-coffee | pass |
-  | return-type: session base value  | is-rt-value       |     | ob-coffee | ob-coffee | pass |
-  | return-type: session base output | is-rt-output      |     | ob-coffee | ob-coffee | pass |
-  | variable-int                     | variable-int      |     | 5         | 5         | pass |
-  | variable-str                     | variable-str      |     | ob-coffee | ob-coffee | pass |
-  | variable-list                    | variable-list     |     | a,b,c     | a,b,c     | pass |
-  | variable-tb                      | variable-tb       |     | 1,2,3,4   | 1,2,3,4   | pass |
-  | variable-multi                   | multi-variables   |     | 12        | 12        | pass |
-  | session-share                    | is-share-variable |     | 9         | 9         | pass |
-  #+TBLFM: $5='(org-sbe $2) :: $6='(if (string= $4 $5) "pass" (format "expected %S but was %S" $4 $5))
+  | functionality                       | block              | arg | expected  | results   | pass |
+  |-------------------------------------+--------------------+-----+-----------+-----------+------|
+  | return-type   : no session value    | ns-rt-value        |     | ob-coffee | ob-coffee | pass |
+  | return-type   : no session output   | ns-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | variable-int  : no session          | ns-variable-int    |     | 5         | 5         | pass |
+  | variable-str  : no session          | ns-variable-str    |     | ob-coffee | ob-coffee | pass |
+  | variable-list : no session          | ns-variable-list   |     | a,b,c     | a,b,c     | pass |
+  | variable-tb   : no session          | ns-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass |
+  | variable-multi: no session          | ns-multi-variables |     | 12        | 12        | pass |
+  | return-type   : session base value  | is-rt-value        |     | ob-coffee | ob-coffee | pass |
+  | return-type   : session base output | is-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | variable-int  : session  base       | variable-int       |     | 5         | 5         | pass |
+  | variable-str  : session base        | variable-str       |     | ob-coffee | ob-coffee | pass |
+  | variable-list : session base        | variable-list      |     | a,b,c     | a,b,c     | pass |
+  | variable-tb   : session base        | variable-tb        |     | 1,2,3,4   | 1,2,3,4   | pass |
+  | variable-multi: session base        | multi-variables    |     | 12        | 12        | pass |
+  | session-share : session base        | is-share-variable  |     | 9         | 9         | pass |
+  #+TBLFM: $5='(org-sbe session base$2) :: $6='(if (string= $4 $5) "pass" (format "expected %S but was %S" $4 $5))

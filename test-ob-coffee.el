@@ -54,11 +54,8 @@
 
 (def-edebug-spec org-test-at-id (form body))
 
-(unless (and (featurep 'ob-coffee) (featurep 'coffee-mode))
+(unless (featurep 'ob-coffee)
   (signal 'missing-test-dependency "Support for Coffee code blocks"))
-
-(ert-deftest ob-coffee/assert ()
-  (should t))
 
 (ert-deftest ob-coffee/coffee-executable ()
   (should (executable-find org-babel-coffee-command)))
@@ -69,7 +66,8 @@
       (org-test-at-id "036292ac-5694-4788-bd0e-eeecb4820020"
                       (org-babel-next-src-block 1)
                       (should
-                       (string-equal "ob-coffee" (org-babel-execute-src-block))))))
+                       (string-equal
+                        "ob-coffee" (org-babel-execute-src-block))))))
 
 (ert-deftest ob-coffee/ns-rt-output ()
   "Test no session return-type: output."
@@ -78,24 +76,43 @@
                       (org-babel-next-src-block 2)
                       (should
                        (string-equal
-                        "ob-coffee\nob-coffee\n" (org-babel-execute-src-block))))))
+                        "ob-coffee\n" (org-babel-execute-src-block))))))
 
-(ert-deftest ob-coffee/is-rt-value ()
-  "Test session return-type: value."
+(ert-deftest ob-coffee/ns-variable-int ()
   (if (executable-find org-babel-coffee-command)
-      (org-test-at-id "892f52bf-35e2-4929-9c3d-43dd0c59cd53"
+      (org-test-at-id "79274f81-96fa-4230-8846-b29113a82c89"
                       (org-babel-next-src-block 1)
+                      (should
+                       (equal
+                        5 (org-babel-execute-src-block))))))
+
+(ert-deftest ob-coffee/ns-variable-str ()
+  (if (executable-find org-babel-coffee-command)
+      (org-test-at-id "79274f81-96fa-4230-8846-b29113a82c89"
+                      (org-babel-next-src-block 2)
                       (should
                        (string-equal "ob-coffee" (org-babel-execute-src-block))))))
 
-(ert-deftest ob-coffee/is-rt-output ()
-  "Test session return-type: output."
+(ert-deftest ob-coffee/ns-variable-list ()
   (if (executable-find org-babel-coffee-command)
-      (org-test-at-id "892f52bf-35e2-4929-9c3d-43dd0c59cd53"
-                      (org-babel-next-src-block 2)
+      (org-test-at-id "79274f81-96fa-4230-8846-b29113a82c89"
+                      (org-babel-next-src-block 3)
                       (should
-                       (string-equal
-                        "ob-coffee\nob-coffee\n" (org-babel-execute-src-block))))))
+                       (string-equal "a,b,c" (org-babel-execute-src-block))))))
+
+(ert-deftest ob-coffee/ns-variable-tb ()
+  (if (executable-find org-babel-coffee-command)
+      (org-test-at-id "79274f81-96fa-4230-8846-b29113a82c89"
+                      (org-babel-next-src-block 4)
+                      (should
+                       (string-equal "1,2,3,4" (org-babel-execute-src-block))))))
+
+(ert-deftest ob-coffee/ns-multi-variables ()
+  (if (executable-find org-babel-coffee-command)
+      (org-test-at-id "79274f81-96fa-4230-8846-b29113a82c89"
+                      (org-babel-next-src-block 5)
+                      (should
+                       (equal 12 (org-babel-execute-src-block))))))
 
 (defun ob-coffee-test-runall ()
   (progn

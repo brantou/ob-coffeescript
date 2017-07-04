@@ -42,8 +42,10 @@
 ;; - Support multiple sessions
 
 ;;; Code:
+(require 'org)
 (require 'ob)
 (require 'ob-eval)
+(require 'ob-ref)
 
 (defvar org-babel-tangle-lang-exts)
 (add-to-list 'org-babel-tangle-lang-exts '("coffee" . "coffee"))
@@ -107,7 +109,7 @@ If RESULT-TYPE equals `output' then return standard output as a
 string.  If RESULT-TYPE equals `value' then return the value of the
 last statement in BODY, as elisp."
   (let ((result
-         (let* ((script-file (org-babel-temp-file "coffee-script-"))
+         (let* ((script-file (org-babel-temp-file "coffee-script-" ".coffee"))
                 (tmp-file (org-babel-temp-file "coffee-")))
            (with-temp-file script-file
              (insert
@@ -225,7 +227,15 @@ last statement in BODY, as elisp."
   (mapcar
    (lambda (pair) (format "%s=%s"
                           (car pair) (org-babel-coffee-var-to-coffee (cdr pair))))
-   (org-babel--get-vars params)))
+   (org-babel-coffee-get-vars params)))
+
+(defun org-babel-coffee-get-vars (params)
+  "org-babel-get-header was removed in org version 8.3.3"
+  (let* ((fversion (org-version))
+         (version (string-to-int fversion)))
+    (if (< version 8.3)
+        (mapcar #'cdr (org-babel-get-header params :var))
+      (org-babel--get-vars params))))
 
 (defun org-babel-coffee-read (results)
   "Convert RESULTS into an appropriate elisp value.
