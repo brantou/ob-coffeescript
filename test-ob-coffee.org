@@ -1,0 +1,79 @@
+#+OPTIONS: ^:nil
+
+* Return type: no session
+   :PROPERTIES:
+   :ID:       036292ac-5694-4788-bd0e-eeecb4820020
+   :END:
+
+   #+NAME: ns-rt-value
+   #+BEGIN_SRC coffee :results value silent
+     'ob-coffee'
+     'ob-coffee'
+   #+END_SRC
+
+   #+NAME: ns-rt-output
+   #+BEGIN_SRC coffee :results output silent
+     console.log 'ob-coffee'
+     console.log 'ob-coffee'
+   #+END_SRC
+
+* Return type: session
+   :PROPERTIES:
+   :ID:       892f52bf-35e2-4929-9c3d-43dd0c59cd53
+   :END:
+
+   #+NAME: is-rt-value
+   #+BEGIN_SRC  coffee :session :results value silent
+     'ob-coffee'
+   #+END_SRC
+
+   #+NAME: is-rt-output
+   #+BEGIN_SRC coffee :session :results output silent
+     console.log 'ob-coffee'
+     console.log 'ob-coffee'
+   #+END_SRC
+
+* Variable
+   :PROPERTIES:
+   :ID:       79274f81-96fa-4230-8846-b29113a82c89
+   :END:
+
+   #+NAME: variable-int
+   #+BEGIN_SRC coffee :session :results value silent :var x=5
+     x
+   #+END_SRC
+
+   #+NAME: variable-str
+   #+BEGIN_SRC coffee  :session :results value silent :var str="ob-coffee"
+     str
+   #+END_SRC
+
+   #+NAME: variable-list
+   #+BEGIN_SRC coffee :session :results value silent :var list='("a" "b" "c")
+     list
+   #+END_SRC
+
+   #+NAME: num-tb
+   | 1 | 2 |
+   |---+---|
+   | 3 | 4 |
+
+   #+BEGIN_SRC coffee :session :results value silent :var tb=num-tb :colnames no
+     tb
+   #+END_SRC
+
+   #+NAME: multi-variables
+   #+BEGIN_SRC coffee :session :results output silent :var x=3 y=4 z=5
+     console.log x+y+z
+   #+END_SRC
+
+* Session
+  :PROPERTIES:
+  :ID:       276bcd7b-7448-43f9-ae2a-205a317d1d47
+  :END:
+
+  #+NAME: is-share-variable
+  #+BEGIN_SRC coffee :session :results output silent
+    square = (x) -> x * x
+    console.log square x
+  #+END_SRC
