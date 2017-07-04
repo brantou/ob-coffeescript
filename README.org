@@ -1,5 +1,5 @@
 #+TITLE: ob-coffee
-
+[[https://travis-ci.org/brantou/ob-coffee.svg?branch=master]]
 * Introduction
   :PROPERTIES:
   :ID:       04d934b4-079c-4bb7-ae60-ad75dea39537
