@@ -1,5 +1,6 @@
 #+TITLE: ob-coffee
 [[https://travis-ci.org/brantou/ob-coffee.svg?branch=master]]
+
 * Introduction
   :PROPERTIES:
   :ID:       04d934b4-079c-4bb7-ae60-ad75dea39537
@@ -110,3 +111,26 @@
 
    : #+RESULTS:
    : : 100
+* Running tests
+  :PROPERTIES:
+  :ID:       166fe0ff-8f74-48b1-a95b-df5ba831271e
+  :END:
+
+  Tests can be executed by /make test/ or invoking emacs directly with
+  the command-line below:
+
+  #+BEGIN_SRC shell
+    emacs -Q --batch -q \
+          -L . \
+          -l ob-coffee.el \
+          -l test-ob-coffee.el \
+          --eval "(progn \
+                    (setq org-confirm-babel-evaluate nil) \
+                    (org-babel-do-load-languages \
+                      'org-babel-load-languages '((emacs-lisp . t) \
+                                                  (sh . t) \
+                                                  (org . t) \
+                                                  (js . t) \
+                                                  (coffee . t))))" \
+          -f ob-coffee-test-runall
+  #+END_SRC
