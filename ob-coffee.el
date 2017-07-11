@@ -227,7 +227,8 @@ last statement in BODY, as elisp."
                                    (format "*%s*" session)
                                  (format "*%s*" "CoffeeREPL"))))
            (session-buffer
-            (or buffer
+            (or (when (and buffer (org-babel-comint-buffer-livep buffer))
+                  buffer)
                 (save-window-excursion
                   (cond
                    ((and (eq 'inf-coffee org-babel-coffee-mode)
@@ -241,7 +242,7 @@ last statement in BODY, as elisp."
       (if (org-babel-comint-buffer-livep session-buffer)
           (progn (sit-for .25) session-buffer)
         (sit-for .5)
-        (org-babel-coffee-initiate-session session)))))
+        (error "Failed to initiate session for running an inferior Coffee")))))
 
 (defun org-babel-coffee-var-to-coffee (var)
   "Convert an elisp var into a string of coffee source code

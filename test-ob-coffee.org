@@ -120,21 +120,21 @@
   :END:
 
   #+NAME: ob-coffee-tests
-  | functionality                       | block              | arg | expected  | results   | pass                                  |
-  |-------------------------------------+--------------------+-----+-----------+-----------+---------------------------------------|
-  | return-type   : no session value    | ns-rt-value        |     | ob-coffee | ob-coffee | pass                                  |
-  | return-type   : no session output   | ns-rt-output       |     | ob-coffee | ob-coffee | pass                                  |
-  | variable-int  : no session          | ns-variable-int    |     | 5         | 5         | pass                                  |
-  | variable-str  : no session          | ns-variable-str    |     | ob-coffee | ob-coffee | pass                                  |
-  | variable-list : no session          | ns-variable-list   |     | a,b,c     | a,b,c     | pass                                  |
-  | variable-tb   : no session          | ns-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass                                  |
-  | variable-multi: no session          | ns-multi-variables |     | 12        | 12        | pass                                  |
-  | return-type   : session base value  | is-rt-value        |     | ob-coffee | #ERROR    | expected "ob-coffee" but was "#ERROR" |
-  | return-type   : session base output | is-rt-output       |     | ob-coffee | #ERROR    | expected "ob-coffee" but was "#ERROR" |
-  | variable-int  : session base        | variable-int       |     | 5         | #ERROR    | expected "5" but was "#ERROR"         |
-  | variable-str  : session base        | variable-str       |     | ob-coffee | #ERROR    | expected "ob-coffee" but was "#ERROR" |
-  | variable-list : session base        | variable-list      |     | a,b,c     | #ERROR    | expected "a,b,c" but was "#ERROR"     |
-  | variable-tb   : session base        | variable-tb        |     | 1,2,3,4   | #ERROR    | expected "1,2,3,4" but was "#ERROR"   |
-  | variable-multi: session base        | multi-variables    |     | 12        | #ERROR    | expected "12" but was "#ERROR"        |
-  | session-share : session base        | is-share-variable  |     | 9         | #ERROR    | expected "9" but was "#ERROR"         |
+  | functionality                       | block              | arg | expected  | results   | pass |
+  |-------------------------------------+--------------------+-----+-----------+-----------+------|
+  | return-type   : no session value    | ns-rt-value        |     | ob-coffee | ob-coffee | pass |
+  | return-type   : no session output   | ns-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | variable-int  : no session          | ns-variable-int    |     | 5         | 5         | pass |
+  | variable-str  : no session          | ns-variable-str    |     | ob-coffee | ob-coffee | pass |
+  | variable-list : no session          | ns-variable-list   |     | a,b,c     | a,b,c     | pass |
+  | variable-tb   : no session          | ns-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass |
+  | variable-multi: no session          | ns-multi-variables |     | 12        | 12        | pass |
+  | return-type   : session base value  | is-rt-value        |     | ob-coffee | ob-coffee | pass |
+  | return-type   : session base output | is-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | variable-int  : session base        | is-variable-int    |     | 5         | 5         | pass |
+  | variable-str  : session base        | is-variable-str    |     | ob-coffee | ob-coffee | pass |
+  | variable-list : session base        | is-variable-list   |     | a,b,c     | a,b,c     | pass |
+  | variable-tb   : session base        | is-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass |
+  | variable-multi: session base        | is-multi-variables |     | 12        | 12        | pass |
+  | session-share : session base        | is-share-variable  |     | 9         | 9         | pass |
   #+TBLFM: $5='(org-sbe $2) :: $6='(if (string= $4 $5) "pass" (format "expected %S but was %S" $4 $5))
