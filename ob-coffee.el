@@ -46,6 +46,7 @@
 ;;; Code:
 (require 'ob)
 (require 'ob-eval)
+(require 'ob-tangle)
 
 (defvar inf-coffee-default-implementation)
 (defvar inf-coffee-implementations)
