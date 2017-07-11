@@ -131,7 +131,7 @@
   | variable-multi: no session          | ns-multi-variables |     | 12        | 12        | pass |
   | return-type   : session base value  | is-rt-value        |     | ob-coffee | ob-coffee | pass |
   | return-type   : session base output | is-rt-output       |     | ob-coffee | ob-coffee | pass |
-  | variable-int  : session  base       | variable-int       |     | 5         | 5         | pass |
+  | variable-int  : session base        | variable-int       |     | 5         | 5         | pass |
   | variable-str  : session base        | variable-str       |     | ob-coffee | ob-coffee | pass |
   | variable-list : session base        | variable-list      |     | a,b,c     | a,b,c     | pass |
   | variable-tb   : session base        | variable-tb        |     | 1,2,3,4   | 1,2,3,4   | pass |
