@@ -46,7 +46,6 @@
 ;;; Code:
 (require 'ob)
 (require 'ob-eval)
-(require 'inf-coffee)
 
 (defvar inf-coffee-default-implementation)
 (defvar inf-coffee-implementations)
@@ -65,7 +64,9 @@
   :type 'string)
 
 (defcustom org-babel-coffee-mode
-  (if (featurep 'inf-coffee) 'inf-coffee 'coffee-mode)
+  (if (or (featurep 'inf-coffee) (fboundp 'run-coffee))
+      'inf-coffee
+    'coffee-mode)
   "Preferred coffee mode for use in running coffee interactively.
 This will typically be either `coffee' or `coffee-mode'."
   :group 'org-babel
