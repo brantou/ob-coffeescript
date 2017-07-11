@@ -2,10 +2,10 @@
 
 ;; Copyright (C) 2017 Brantou
 
-;; Author: Brantou
+;; Author: Brantou <brantou89@gmail.com>
 ;; Keywords: coffee-script, literate programming, reproducible research
 ;; Homepage: http://orgmode.org
-;; Version: 0.01
+;; Version:  1.0.0
 
 ;;; License:
 
@@ -24,28 +24,32 @@
 ;; Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
 ;; Boston, MA 02110-1301, USA.
 
-;;; Commentary:
+;; This file is not part of GNU Emacs.
 
+;;; Commentary:
+;;
 ;; Org-Babel support for evaluating coffee-script code.
 
 ;;; Requirements:
-
+;;
 ;; - node :: https://nodejs.org/en/
 ;;
 ;; - coffee-script :: http://coffeescript.org/
 ;;
 ;; - coffee-mode :: Can be installed through ELPA, or from
 ;;   https://raw.githubusercontent.com/defunkt/coffee-mode/master/coffee-mode.el
-
-;;; TODO:
-
-;; - Support multiple sessions
+;;
+;; - inf-coffee :: Can be installed through from
+;;   https://raw.githubusercontent.com/brantou/inf-coffee/master/inf-coffee.el
+;;
 
 ;;; Code:
-(require 'org)
 (require 'ob)
 (require 'ob-eval)
-(require 'ob-ref)
+(require 'inf-coffee)
+
+(defvar inf-coffee-default-implementation)
+(defvar inf-coffee-implementations)
 
 (defvar org-babel-tangle-lang-exts)
 (add-to-list 'org-babel-tangle-lang-exts '("coffee" . "coffee"))
@@ -56,8 +60,18 @@
 (defcustom org-babel-coffee-command "coffee"
   "Name of command used to evaluate coffee blocks."
   :group 'org-babel
-  :version "24.1"
+  :version "24.4"
+  :package-version '(Org . "8.0")
   :type 'string)
+
+(defcustom org-babel-coffee-mode
+  (if (featurep 'inf-coffee) 'inf-coffee 'coffee-mode)
+  "Preferred coffee mode for use in running coffee interactively.
+This will typically be either `coffee' or `coffee-mode'."
+  :group 'org-babel
+  :version "24.4"
+  :package-version '(Org . "8.0")
+  :type 'symbol)
 
 (defvar org-babel-coffee-eoe-indicator  "'org_babel_coffee_eoe'"
   "String to indicate that evaluation has completed.")
@@ -203,12 +217,25 @@ last statement in BODY, as elisp."
   "If there is not a current inferior-process-buffer in SESSION then create.
  Return the initialized session."
   (unless (string= session "none")
-    (require 'coffee-mode)
-    (let* ((buffer (get-buffer "CoffeeREPL"))
+    (when (string= session "") (setq session "coffee"))
+    (require org-babel-coffee-mode)
+    (let* ((cmd (when (featurep 'inf-coffee)
+                  (cdr (assoc inf-coffee-default-implementation
+                              inf-coffee-implementations))))
+           (buffer (get-buffer (if (featurep 'inf-coffee)
+                                   (format "*%s*" session)
+                                 (format "*%s*" "CoffeeREPL"))))
            (session-buffer
             (or buffer
                 (save-window-excursion
-                  (coffee-repl)
+                  (cond
+                   ((and (eq 'inf-coffee org-babel-coffee-mode)
+                         (fboundp 'run-coffee))
+                    (run-coffee cmd session))
+                   ((and (eq 'coffee-mode org-babel-coffee-mode)
+                         (fboundp 'coffee-repl))
+                    (coffee-repl))
+                   (t (error "No function available for running an inferior Coffee")))
                   (current-buffer)))))
       (if (org-babel-comint-buffer-livep session-buffer)
           (progn (sit-for .25) session-buffer)
