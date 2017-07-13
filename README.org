@@ -1,4 +1,4 @@
-#+TITLE: ob-coffee
+#+TITLE: ob-coffeescript
 [[https://travis-ci.org/brantou/ob-coffee.svg?branch=master]]
 
 * Introduction
@@ -9,7 +9,7 @@
   =ob-coffeescript= enables [[http://orgmode.org/worg/org-contrib/babel/intro.html][Org-Babel]] support for evaluating [[http://coffee-script.org/][CoffeeScript]] code.
   It was created based on the usage of [[./ob-template.el][ob-template]].
 
-  #+BEGIN_SRC coffee
+  #+BEGIN_SRC coffeescript
   "hello world"
   #+END_SRC
 
@@ -26,7 +26,7 @@
    :ID:       c7c04ccf-b33b-4f50-8457-a808072e4e58
    :END:
 
-  : #+BEGIN_SRC coffee :var a=3 b=4
+  : #+BEGIN_SRC coffeescript :var a=3 b=4
   :   a+b
   : #+END_SRC
 
@@ -43,7 +43,7 @@
   : | brant | 170... |
   : | ou    | 138... |
 
-  : #+BEGIN_SRC coffee :var tb=tel-note :results output table
+  : #+BEGIN_SRC coffeescript :var tb=tel-note :results output table
   :   console.log tb
   : #+END_SRC
 
@@ -51,7 +51,7 @@
   : | brant | 170... |
   : | ou    | 138... |
 
-  : #+BEGIN_SRC coffee :var lst='(1 2 3) :results output
+  : #+BEGIN_SRC coffeescript :var lst='(1 2 3) :results output
   :   console.log lst
   :   console.log num for num in lst
   : #+END_SRC
@@ -68,12 +68,12 @@
    :END:
 
    : #+NAME: square
-   : #+BEGIN_SRC coffee
+   : #+BEGIN_SRC coffeescript
    :   square = (x) -> x * x
    : #+END_SRC
 
    : #+NAME: calc-square
-   : #+BEGIN_SRC coffee  :var x=0 :noweb strip-export :results output
+   : #+BEGIN_SRC coffeescript  :var x=0 :noweb strip-export :results output
    : <<square>>
    : console.log square x
    : #+END_SRC
@@ -87,17 +87,17 @@
    :ID:       2F331C5F-75BD-486D-ABCB-85F4E04A4BEF
    :END:
    : #+NAME: func-def
-   : #+BEGIN_SRC coffee :session :results output silent
+   : #+BEGIN_SRC coffeescript :session :results output silent
    :   square = (x) -> x * x
    : #+END_SRC
 
    : #+NAME: func-call-output
-   : #+BEGIN_SRC coffee :session :results output :var x=5
+   : #+BEGIN_SRC coffeescript :session :results output :var x=5
    :   console.log square x
    : #+END_SRC
 
    : #+NAME: func-call-value
-   : #+BEGIN_SRC  coffee :session :results value :var x=5
+   : #+BEGIN_SRC  coffeescript :session :results value :var x=5
    :   square x
    : #+END_SRC
 
@@ -122,8 +122,8 @@
   #+BEGIN_SRC shell
     emacs -Q --batch -q \
           -L . \
-          -l ob-coffee.el \
-          -l test-ob-coffee.el \
+          -l ob-coffeescript.el \
+          -l test-ob-coffeescript.el \
           --eval "(progn \
                     (setq org-confirm-babel-evaluate nil) \
                     (org-babel-do-load-languages \
@@ -131,6 +131,6 @@
                                                   (sh . t) \
                                                   (org . t) \
                                                   (js . t) \
-                                                  (coffee . t))))" \
-          -f ob-coffee-test-runall
+                                                  (coffeescript . t))))" \
+          -f ob-coffeescript-test-runall
   #+END_SRC
