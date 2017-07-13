@@ -155,12 +155,12 @@ last statement in BODY, as elisp."
                           (org-babel-process-file-name tmp-file 'noquote))
                 full-body)))
            (let ((eval-cmd
-                   (format "%s %s"
-                           org-babel-coffeescript-command
-                           (org-babel-process-file-name script-file))))
-              (pcase result-type
-                (`output (org-babel-eval eval-cmd ""))
-                (`value (when (org-babel-eval eval-cmd "")
+                  (format "%s %s"
+                          org-babel-coffeescript-command
+                          (org-babel-process-file-name script-file))))
+             (pcase result-type
+               (`output (org-babel-eval eval-cmd ""))
+               (`value (when (org-babel-eval eval-cmd "")
                          (org-babel-eval-read-file tmp-file))))))))
     (org-babel-result-cond result-params
       result (org-babel-coffeescript-read result))))
@@ -184,7 +184,7 @@ last statement in BODY, as elisp."
                  (append
                   (list
                    (format "_stdout=console._stdout;console._stdout=fs.createWriteStream('%s');"
-                                (org-babel-process-file-name tmp-redir-file 'noquote)))
+                           (org-babel-process-file-name tmp-redir-file 'noquote)))
                   (list body)
                   (list "console._stdout=_stdout;")
                   (list org-babel-coffeescript-eoe-indicator)))
