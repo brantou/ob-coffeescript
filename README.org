@@ -6,7 +6,7 @@
   :ID:       04d934b4-079c-4bb7-ae60-ad75dea39537
   :END:
 
-  =ob-coffee= enables [[http://orgmode.org/worg/org-contrib/babel/intro.html][Org-Babel]] support for evaluating [[http://coffee-script.org/][CoffeeScript]] code.
+  =ob-coffeescript= enables [[http://orgmode.org/worg/org-contrib/babel/intro.html][Org-Babel]] support for evaluating [[http://coffee-script.org/][CoffeeScript]] code.
   It was created based on the usage of [[./ob-template.el][ob-template]].
 
   #+BEGIN_SRC coffee

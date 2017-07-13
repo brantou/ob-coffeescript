@@ -4,8 +4,8 @@ test:
 	@rm -f .test-org-id-locations
 	emacs -Q --batch -q \
 		-L . \
-		-l ob-coffee.el \
-		-l test-ob-coffee.el \
+		-l ob-coffeescript.el \
+		-l test-ob-coffeescript.el \
 		--eval "(progn \
 	              (setq org-confirm-babel-evaluate nil) \
 	              (org-babel-do-load-languages \
