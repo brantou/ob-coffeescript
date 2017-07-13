@@ -301,5 +301,5 @@ Emacs-lisp table, otherwise return the results as a string."
                                         "'" "\"" results))))))
      results)))
 
-(provide 'ob-coffee)
+(provide 'ob-coffeescript)
  ;;; ob-coffee.el ends here
