@@ -10,13 +10,13 @@
    :ID:       ee0cb5b4-7d0a-45a1-a683-edb69367c84f
    :END:
    #+NAME: ns-rt-value
-   #+BEGIN_SRC coffee :results value
-     'ob-coffee'
+   #+BEGIN_SRC coffeescript :results value
+     'ob-coffeescript'
    #+END_SRC
 
    #+NAME: ns-rt-output
-   #+BEGIN_SRC coffee :results output
-     console.log 'ob-coffee'
+   #+BEGIN_SRC coffeescript :results output
+     console.log 'ob-coffeescript'
    #+END_SRC
 
 ** variable
@@ -25,17 +25,17 @@
    :END:
 
     #+NAME: ns-variable-int
-    #+BEGIN_SRC coffee :results value :var x=5
+    #+BEGIN_SRC coffeescript :results value :var x=5
       x
     #+END_SRC
 
     #+NAME: ns-variable-str
-    #+BEGIN_SRC coffee :results value :var str="ob-coffee"
+    #+BEGIN_SRC coffeescript :results value :var str="ob-coffeescript"
       str
     #+END_SRC
 
     #+NAME: ns-variable-list
-    #+BEGIN_SRC coffee :results value silent :var list='("a" "b" "c")
+    #+BEGIN_SRC coffeescript :results value silent :var list='("a" "b" "c")
       list
     #+END_SRC
 
@@ -45,12 +45,12 @@
     | 3 | 4 |
 
     #+NAME: ns-variable-tb
-    #+BEGIN_SRC coffee :results value :var tb=num-tb :colnames no
+    #+BEGIN_SRC coffeescript :results value :var tb=num-tb :colnames no
       tb
     #+END_SRC
 
     #+NAME: ns-multi-variables
-    #+BEGIN_SRC coffee :results value :var x=3 y=4 z=5
+    #+BEGIN_SRC coffeescript :results value :var x=3 y=4 z=5
       x+y+z
     #+END_SRC
 
@@ -64,13 +64,13 @@
    :ID:       88b0c507-4973-44f9-9960-7ac681229567
    :END:
    #+NAME: is-rt-value
-   #+BEGIN_SRC coffee :session :results value
-     'ob-coffee'
+   #+BEGIN_SRC coffeescript :session :results value
+     'ob-coffeescript'
    #+END_SRC
 
    #+NAME: is-rt-output
-   #+BEGIN_SRC coffee :session :results output
-     console.log 'ob-coffee'
+   #+BEGIN_SRC coffeescript :session :results output
+     console.log 'ob-coffeescript'
    #+END_SRC
 
 ** variable
@@ -79,17 +79,17 @@
    :END:
 
     #+NAME: is-variable-int
-    #+BEGIN_SRC coffee :session :results value :var x=5
+    #+BEGIN_SRC coffeescript :session :results value :var x=5
       x
     #+END_SRC
 
     #+NAME: is-variable-str
-    #+BEGIN_SRC coffee  :session :results value :var str="ob-coffee"
+    #+BEGIN_SRC coffeescript  :session :results value :var str="ob-coffeescript"
       str
     #+END_SRC
 
     #+NAME: is-variable-list
-    #+BEGIN_SRC coffee :session :results value :var list='("a" "b" "c")
+    #+BEGIN_SRC coffeescript :session :results value :var list='("a" "b" "c")
       list
     #+END_SRC
 
@@ -99,17 +99,17 @@
     | 3 | 4 |
 
     #+NAME: is-variable-tb
-    #+BEGIN_SRC coffee :session :results value :var tb=num-tb :colnames no
+    #+BEGIN_SRC coffeescript :session :results value :var tb=num-tb :colnames no
       tb
     #+END_SRC
 
     #+NAME: is-multi-variables
-    #+BEGIN_SRC coffee :session :results value :var x=3 y=4 z=5
+    #+BEGIN_SRC coffeescript :session :results value :var x=3 y=4 z=5
       x+y+z
     #+END_SRC
 
     #+NAME: is-share-variable
-    #+BEGIN_SRC coffee :session :results output
+    #+BEGIN_SRC coffeescript :session :results output
     square = (x) -> x * x
     console.log square x
     #+END_SRC
@@ -119,20 +119,20 @@
   :ID:       c4e351f8-7556-4e08-a093-f9feb4bedcba
   :END:
 
-  #+NAME: ob-coffee-tests
+  #+NAME: ob-coffeescript-tests
   | functionality                       | block              | arg | expected  | results   | pass |
   |-------------------------------------+--------------------+-----+-----------+-----------+------|
-  | return-type   : no session value    | ns-rt-value        |     | ob-coffee | ob-coffee | pass |
-  | return-type   : no session output   | ns-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | return-type   : no session value    | ns-rt-value        |     | ob-coffeescript | ob-coffeescript | pass |
+  | return-type   : no session output   | ns-rt-output       |     | ob-coffeescript | ob-coffeescript | pass |
   | variable-int  : no session          | ns-variable-int    |     | 5         | 5         | pass |
-  | variable-str  : no session          | ns-variable-str    |     | ob-coffee | ob-coffee | pass |
+  | variable-str  : no session          | ns-variable-str    |     | ob-coffeescript | ob-coffeescript | pass |
   | variable-list : no session          | ns-variable-list   |     | a,b,c     | a,b,c     | pass |
   | variable-tb   : no session          | ns-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass |
   | variable-multi: no session          | ns-multi-variables |     | 12        | 12        | pass |
-  | return-type   : session base value  | is-rt-value        |     | ob-coffee | ob-coffee | pass |
-  | return-type   : session base output | is-rt-output       |     | ob-coffee | ob-coffee | pass |
+  | return-type   : session base value  | is-rt-value        |     | ob-coffeescript | ob-coffeescript | pass |
+  | return-type   : session base output | is-rt-output       |     | ob-coffeescript | ob-coffeescript | pass |
   | variable-int  : session base        | is-variable-int    |     | 5         | 5         | pass |
-  | variable-str  : session base        | is-variable-str    |     | ob-coffee | ob-coffee | pass |
+  | variable-str  : session base        | is-variable-str    |     | ob-coffeescript | ob-coffeescript | pass |
   | variable-list : session base        | is-variable-list   |     | a,b,c     | a,b,c     | pass |
   | variable-tb   : session base        | is-variable-tb     |     | 1,2,3,4   | 1,2,3,4   | pass |
   | variable-multi: session base        | is-multi-variables |     | 12        | 12        | pass |

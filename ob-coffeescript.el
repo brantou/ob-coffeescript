@@ -3,7 +3,7 @@
 ;; Copyright (C) 2017 Brantou
 
 ;; Author: Brantou <brantou89@gmail.com>
-;; URL: https://github.com/brantou/ob-coffee
+;; URL: https://github.com/brantou/ob-coffeescript
 ;; Keywords: coffee-script, literate programming, reproducible research
 ;; Homepage: http://orgmode.org
 ;; Version:  1.0.0
@@ -64,23 +64,23 @@
 (require 'ob-eval)
 (require 'ob-tangle)
 
-(defvar inf-coffee-default-implementation)
-(defvar inf-coffee-implementations)
+(defvar inf-coffeescript-default-implementation)
+(defvar inf-coffeescript-implementations)
 
 (defvar org-babel-tangle-lang-exts)
-(add-to-list 'org-babel-tangle-lang-exts '("coffee" . "coffee"))
+(add-to-list 'org-babel-tangle-lang-exts '("coffeescript" . "coffee"))
 
-(defvar org-babel-default-header-args:coffee '()
+(defvar org-babel-default-header-args:coffeescript '()
   "Default header arguments for coffee code blocks.")
 
-(defcustom org-babel-coffee-command "coffee"
+(defcustom org-babel-coffeescript-command "coffee"
   "Name of command used to evaluate coffee blocks."
   :group 'org-babel
   :version "24.4"
   :package-version '(Org . "8.0")
   :type 'string)
 
-(defcustom org-babel-coffee-mode
+(defcustom org-babel-coffeescript-mode
   (if (or (featurep 'inf-coffee) (fboundp 'run-coffee))
       'inf-coffee
     'coffee-mode)
@@ -91,10 +91,10 @@ This will typically be either `coffee' or `coffee-mode'."
   :package-version '(Org . "8.0")
   :type 'symbol)
 
-(defvar org-babel-coffee-eoe-indicator  "'org_babel_coffee_eoe'"
+(defvar org-babel-coffeescript-eoe-indicator  "'org_babel_coffee_eoe'"
   "String to indicate that evaluation has completed.")
 
-(defvar org-babel-coffee-function-wrapper
+(defvar org-babel-coffeescript-function-wrapper
   "
 fs = require('fs')
 _wrapper = ->
@@ -103,20 +103,20 @@ _wrapper = ->
 fs.writeFile('%s', '' + _wrapper()) "
   "coffee-script code to print value of body.")
 
-(defun org-babel-execute:coffee (body params)
+(defun org-babel-execute:coffeescript (body params)
   "Execute a block of Coffee code with org-babel.
  This function is called by `org-babel-execute-src-block'"
   (message "executing Coffee source code block")
-  (let* ((org-babel-coffee-command
-          (or (cdr (assq :coffee params))
-              org-babel-coffee-command))
-         (session (org-babel-coffee-initiate-session
+  (let* ((org-babel-coffeescript-command
+          (or (cdr (assq :coffeescript params))
+              org-babel-coffeescript-command))
+         (session (org-babel-coffeescript-initiate-session
                    (cdr (assq :session params))))
          (result-params (cdr (assq :result-params params)))
          (result-type (cdr (assq :result-type params)))
          (full-body (org-babel-expand-body:generic
-                     body params (org-babel-variable-assignments:coffee params)))
-         (result (org-babel-coffee-evaluate
+                     body params (org-babel-variable-assignments:coffeescript params)))
+         (result (org-babel-coffeescript-evaluate
                   session full-body result-type result-params)))
     (org-babel-reassemble-table
      result
@@ -125,16 +125,16 @@ fs.writeFile('%s', '' + _wrapper()) "
      (org-babel-pick-name (cdr (assq :rowname-names params))
                           (cdr (assq :rownames params))))))
 
-(defun org-babel-coffee-evaluate
+(defun org-babel-coffeescript-evaluate
     (session body &optional result-type result-params preamble)
   "Evaluate BODY as Coffee code."
   (if session
-      (org-babel-coffee-evaluate-session
+      (org-babel-coffeescript-evaluate-session
        session body result-type result-params)
-    (org-babel-coffee-evaluate-external-process
+    (org-babel-coffeescript-evaluate-external-process
      body result-type result-params)))
 
-(defun org-babel-coffee-evaluate-external-process
+(defun org-babel-coffeescript-evaluate-external-process
     (body &optional result-type result-params)
   "Evaluate BODY in external coffee process.
 If RESULT-TYPE equals `output' then return standard output as a
@@ -146,7 +146,7 @@ last statement in BODY, as elisp."
            (with-temp-file script-file
              (insert
               (if (string= result-type "value")
-                  (format org-babel-coffee-function-wrapper
+                  (format org-babel-coffeescript-function-wrapper
                           (mapconcat
                            (lambda (line) (format "\t%s" line))
                            (split-string (org-remove-indentation (org-trim body))
@@ -156,16 +156,16 @@ last statement in BODY, as elisp."
                 full-body)))
            (let ((eval-cmd
                    (format "%s %s"
-                           org-babel-coffee-command
+                           org-babel-coffeescript-command
                            (org-babel-process-file-name script-file))))
               (pcase result-type
                 (`output (org-babel-eval eval-cmd ""))
                 (`value (when (org-babel-eval eval-cmd "")
                          (org-babel-eval-read-file tmp-file))))))))
     (org-babel-result-cond result-params
-      result (org-babel-coffee-read result))))
+      result (org-babel-coffeescript-read result))))
 
-(defun org-babel-coffee-evaluate-session
+(defun org-babel-coffeescript-evaluate-session
     (session body &optional result-type result-params)
   "Pass BODY to the Python process in SESSION.
 If RESULT-TYPE equals `output' then return standard output as a
@@ -176,7 +176,7 @@ last statement in BODY, as elisp."
            (`output
             (let ((tmp-redir-file (org-babel-temp-file "coffee-redir-")))
               (org-babel-comint-with-output
-                  (session org-babel-coffee-eoe-indicator t body)
+                  (session org-babel-coffeescript-eoe-indicator t body)
                 (comint-send-input nil t)
                 (mapc
                  (lambda (line)
@@ -187,13 +187,13 @@ last statement in BODY, as elisp."
                                 (org-babel-process-file-name tmp-redir-file 'noquote)))
                   (list body)
                   (list "console._stdout=_stdout;")
-                  (list org-babel-coffee-eoe-indicator)))
+                  (list org-babel-coffeescript-eoe-indicator)))
                 (comint-send-input nil t))
               (org-babel-eval-read-file tmp-redir-file)))
            (`value
             (let* ((tmp-file (org-babel-temp-file "coffee-")))
               (org-babel-comint-with-output
-                  (session org-babel-coffee-eoe-indicator t body)
+                  (session org-babel-coffeescript-eoe-indicator t body)
                 (comint-send-input nil t)
                 (mapc
                  (lambda (line)
@@ -202,18 +202,18 @@ last statement in BODY, as elisp."
                   (list body)
                   (list (format "fs.writeFile('%s', _.toString())"
                                 (org-babel-process-file-name tmp-file 'noquote)))
-                  (list org-babel-coffee-eoe-indicator)))
+                  (list org-babel-coffeescript-eoe-indicator)))
                 (comint-send-input nil t))
               (org-babel-eval-read-file tmp-file))))))
-    (unless (string= (substring org-babel-coffee-eoe-indicator 1 -1) result)
+    (unless (string= (substring org-babel-coffeescript-eoe-indicator 1 -1) result)
       (org-babel-result-cond result-params
         result
-        (org-babel-coffee-read (org-trim result))))))
+        (org-babel-coffeescript-read (org-trim result))))))
 
-(defun org-babel-prep-session:coffee (session params)
+(defun org-babel-prep-session:coffeescript (session params)
   "Prepare SESSION according to the header arguments specified in PARAMS."
-  (let* ((session (org-babel-coffee-initiate-session session))
-         (var-lines (org-babel-variable-assignments:coffee params)))
+  (let* ((session (org-babel-coffeescript-initiate-session session))
+         (var-lines (org-babel-variable-assignments:coffeescript params)))
     (org-babel-comint-in-buffer session
       (sit-for .5) (goto-char (point-max))
       (mapc (lambda (var)
@@ -222,24 +222,24 @@ last statement in BODY, as elisp."
               (sit-for .1) (goto-char (point-max))) var-lines))
     session))
 
-(defun org-babel-load-session:coffee (session body params)
+(defun org-babel-load-session:coffeescript (session body params)
   "Load BODY into SESSION."
   (save-window-excursion
-    (let ((buffer (org-babel-prep-session:coffee session params)))
+    (let ((buffer (org-babel-prep-session:coffeescript session params)))
       (with-current-buffer buffer
         (goto-char (process-mark (get-buffer-process (current-buffer))))
         (insert (org-babel-chomp body)))
       buffer)))
 
-(defun org-babel-coffee-initiate-session (&optional session)
+(defun org-babel-coffeescript-initiate-session (&optional session)
   "If there is not a current inferior-process-buffer in SESSION then create.
  Return the initialized session."
   (unless (string= session "none")
     (when (string= session "") (setq session "coffee"))
-    (require org-babel-coffee-mode)
+    (require org-babel-coffeescript-mode)
     (let* ((cmd (when (featurep 'inf-coffee)
-                  (cdr (assoc inf-coffee-default-implementation
-                              inf-coffee-implementations))))
+                  (cdr (assoc inf-coffeescript-default-implementation
+                              inf-coffeescript-implementations))))
            (buffer (get-buffer (if (featurep 'inf-coffee)
                                    (format "*%s*" session)
                                  (format "*%s*" "CoffeeREPL"))))
@@ -248,10 +248,10 @@ last statement in BODY, as elisp."
                   buffer)
                 (save-window-excursion
                   (cond
-                   ((and (eq 'inf-coffee org-babel-coffee-mode)
+                   ((and (eq 'inf-coffee org-babel-coffeescript-mode)
                          (fboundp 'run-coffee))
                     (run-coffee cmd session))
-                   ((and (eq 'coffee-mode org-babel-coffee-mode)
+                   ((and (eq 'coffee-mode org-babel-coffeescript-mode)
                          (fboundp 'coffee-repl))
                     (coffee-repl))
                    (t (error "No function available for running an inferior Coffee")))
@@ -261,21 +261,21 @@ last statement in BODY, as elisp."
         (sit-for .5)
         (error "Failed to initiate session for running an inferior Coffee")))))
 
-(defun org-babel-coffee-var-to-coffee (var)
+(defun org-babel-coffeescript-var-to-coffee (var)
   "Convert an elisp var into a string of coffee source code
  specifying a var of the same value."
   (if (listp var)
-      (concat "[" (mapconcat #'org-babel-coffee-var-to-coffee var ", ") "]")
+      (concat "[" (mapconcat #'org-babel-coffeescript-var-to-coffee var ", ") "]")
     (replace-regexp-in-string "\n" "\\\\n" (format "%S" var))))
 
-(defun org-babel-variable-assignments:coffee (params)
+(defun org-babel-variable-assignments:coffeescript (params)
   "Return list of Javascript statements assigning the block's variables."
   (mapcar
    (lambda (pair) (format "%s=%s"
-                          (car pair) (org-babel-coffee-var-to-coffee (cdr pair))))
-   (org-babel-coffee-get-vars params)))
+                          (car pair) (org-babel-coffeescript-var-to-coffee (cdr pair))))
+   (org-babel-coffeescript-get-vars params)))
 
-(defun org-babel-coffee-get-vars (params)
+(defun org-babel-coffeescript-get-vars (params)
   "org-babel-get-header was removed in org version 8.3.3"
   (let* ((fversion (org-version))
          (version (string-to-int fversion)))
@@ -283,7 +283,7 @@ last statement in BODY, as elisp."
         (mapcar #'cdr (org-babel-get-header params :var))
       (org-babel--get-vars params))))
 
-(defun org-babel-coffee-read (results)
+(defun org-babel-coffeescript-read (results)
   "Convert RESULTS into an appropriate elisp value.
 If RESULTS look like a table, then convert them into an
 Emacs-lisp table, otherwise return the results as a string."
@@ -302,4 +302,4 @@ Emacs-lisp table, otherwise return the results as a string."
      results)))
 
 (provide 'ob-coffeescript)
- ;;; ob-coffee.el ends here
+ ;;; ob-coffeescript.el ends here

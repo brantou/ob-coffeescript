@@ -13,5 +13,5 @@ test:
 	                                            (sh . t) \
 	                                            (org . t) \
 	                                            (js . t) \
-	                                            (coffee . t))))" \
-	    -f ob-coffee-test-runall
+	                                            (coffeescript . t))))" \
+	    -f ob-coffeescript-test-runall
