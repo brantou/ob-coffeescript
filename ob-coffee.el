@@ -3,6 +3,7 @@
 ;; Copyright (C) 2017 Brantou
 
 ;; Author: Brantou <brantou89@gmail.com>
+;; URL: https://github.com/brantou/ob-coffee
 ;; Keywords: coffee-script, literate programming, reproducible research
 ;; Homepage: http://orgmode.org
 ;; Version:  1.0.0
@@ -29,6 +30,13 @@
 ;;; Commentary:
 ;;
 ;; Org-Babel support for evaluating coffee-script code.
+;;
+;; It was created based on the usage of ob-template.
+;; fully implementation:
+;; - Support session(multi-session independent) and external evaluation.
+;; - Support :results value and output .
+;; - Can handle table and list input.
+;;
 
 ;;; Requirements:
 ;;
@@ -41,6 +49,14 @@
 ;;
 ;; - inf-coffee :: Can be installed through from
 ;;   https://raw.githubusercontent.com/brantou/inf-coffee/master/inf-coffee.el
+;;
+
+;;; TODO
+
+;;
+;; - Provide better error feedback.
+;;
+;; - more robust for session evaluation.
 ;;
 
 ;;; Code:
