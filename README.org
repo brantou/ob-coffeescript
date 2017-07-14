@@ -1,5 +1,5 @@
 #+TITLE: ob-coffeescript
-[[https://travis-ci.org/brantou/ob-coffee.svg?branch=master]]
+[[https://travis-ci.org/brantou/ob-coffeescript.svg?branch=master]]
 
 * Introduction
   :PROPERTIES:
