@@ -64,8 +64,8 @@
 (require 'ob-eval)
 (require 'ob-tangle)
 
-(defvar inf-coffeescript-default-implementation)
-(defvar inf-coffeescript-implementations)
+(defvar inf-coffee-default-implementation)
+(defvar inf-coffee-implementations)
 
 (defvar org-babel-tangle-lang-exts)
 (add-to-list 'org-babel-tangle-lang-exts '("coffeescript" . "coffee"))
@@ -80,7 +80,7 @@
   :package-version '(Org . "8.0")
   :type 'string)
 
-(defcustom org-babel-coffeescript-mode
+(defcustom org-babel-coffee-mode
   (if (or (featurep 'inf-coffee) (fboundp 'run-coffee))
       'inf-coffee
     'coffee-mode)
@@ -236,10 +236,10 @@ last statement in BODY, as elisp."
  Return the initialized session."
   (unless (string= session "none")
     (when (string= session "") (setq session "coffee"))
-    (require org-babel-coffeescript-mode)
+    (require org-babel-coffee-mode)
     (let* ((cmd (when (featurep 'inf-coffee)
-                  (cdr (assoc inf-coffeescript-default-implementation
-                              inf-coffeescript-implementations))))
+                  (cdr (assoc inf-coffee-default-implementation
+                              inf-coffee-implementations))))
            (buffer (get-buffer (if (featurep 'inf-coffee)
                                    (format "*%s*" session)
                                  (format "*%s*" "CoffeeREPL"))))
@@ -248,10 +248,10 @@ last statement in BODY, as elisp."
                   buffer)
                 (save-window-excursion
                   (cond
-                   ((and (eq 'inf-coffee org-babel-coffeescript-mode)
+                   ((and (eq 'inf-coffee org-babel-coffee-mode)
                          (fboundp 'run-coffee))
                     (run-coffee cmd session))
-                   ((and (eq 'coffee-mode org-babel-coffeescript-mode)
+                   ((and (eq 'coffee-mode org-babel-coffee-mode)
                          (fboundp 'coffee-repl))
                     (coffee-repl))
                    (t (error "No function available for running an inferior Coffee")))
