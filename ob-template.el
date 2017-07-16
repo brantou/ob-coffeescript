@@ -68,7 +68,7 @@
 ;; be called by the `org-babel-execute:template' function below.
 (defun org-babel-expand-body:template (body params &optional processed-params)
   "Expand BODY according to PARAMS, return the expanded body."
-  (require 'inf-template)
+  ;;(require 'inf-template)
   (let ((vars (nth 1 (or processed-params (org-babel-process-params params)))))
     (concat
      (mapconcat ;; define any variables
