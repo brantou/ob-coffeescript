@@ -7,7 +7,7 @@
   :END:
 
   =ob-coffeescript= enables [[http://orgmode.org/worg/org-contrib/babel/intro.html][Org-Babel]] support for evaluating [[http://coffee-script.org/][CoffeeScript]] code.
-  It was created based on the usage of [[./ob-template.el][ob-template]].
+  It was created based on the usage of [[http://orgmode.org/w/worg.git/blob/HEAD:/org-contrib/babel/ob-template.el][ob-template]].
 
   #+BEGIN_SRC coffeescript
   "hello world"
