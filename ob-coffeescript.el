@@ -1,4 +1,4 @@
-;;; ob-coffeescript.el --- org-babel functions for Coffee evaluation
+;;; ob-coffeescript.el --- org-babel functions for coffee-script evaluation, and fully implementation!
 
 ;; Copyright (C) 2017 Brantou
 
