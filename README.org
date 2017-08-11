@@ -1,5 +1,5 @@
 #+TITLE: ob-coffeescript
-[[https://travis-ci.org/brantou/ob-crystal][file:https://travis-ci.org/brantou/ob-coffeescript.svg?branch=master]][[https://melpa.org/#/ob-coffeescript][file:https://melpa.org/packages/ob-coffeescript-badge.svg]]
+[[https://travis-ci.org/brantou/ob-coffeescript][file:https://travis-ci.org/brantou/ob-coffeescript.svg?branch=master]][[https://melpa.org/#/ob-coffeescript][file:https://melpa.org/packages/ob-coffeescript-badge.svg]]
 
 * Introduction
   :PROPERTIES:
